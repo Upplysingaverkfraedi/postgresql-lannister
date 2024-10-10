@@ -35,7 +35,6 @@ Notið IDE til að tengjast PostgreSQL gagnagrunninum með þessum tengingaruppl
 
 Til að sjá hvaða töflur standa ykkur til boða getið þið keyrt eftirfarandi SQL fyrirspurn:
 
-- ```sql
 SELECT *
 FROM pg_tables
 WHERE schemaname IN ('atlas', 'got')
