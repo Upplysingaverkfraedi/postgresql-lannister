@@ -1,6 +1,8 @@
 ## Inngangur
 Þetta verkefni felur í sér að vinna með PostgreSQL gagnagrunn til að útfæra SQL fyrirspurnir tengdar "Game of Thrones" heiminum. Verkefnið er skipt í þrjá liði þar sem við framkvæmum ýmsar fyrirspurnir og setjum gögn í töflur.
 
+# Hluti 1
+
 ## Möppustrúktúr
 Verkefnið fylgir eftirfarandi möppustrúktúr:
 
@@ -110,7 +112,7 @@ Einnig er hægt að nota eftirfarandi skipun:
 `SELECT * FROM lausn.v_pov_characters_human_readable;`
 
 
-# Hluti 3: PostGIS og föll í PostgreSQL
+# Hluti 3
 
 ## Verkefnalýsing
 Í þessum hluta átti að nota PostGIS sem er viðbót fyrir PostgreSQL sem bætir við geospatial gagnagrunnsföllum og aðgerðum. PostgreSQL með PostGIS gerir okkur leyft að geym það sérhæfðar gagnagrunnstöflur og föll til að vinna með geospatial gögn. Annars vegar átti að finna flatarmál konungsríkja og hins vegar finna sjaldgæfustu staðsetningartegund utan The Seven Kingdoms og heiti þeirra staða sem tilheyrðu þeirri tegund. 
