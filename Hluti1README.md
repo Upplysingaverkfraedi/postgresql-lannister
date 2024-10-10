@@ -14,7 +14,6 @@ Verkefnið fylgir eftirfarandi möppustrúktúr:
 
 ### Möppulýsing:
 - **sql/**: Inniheldur allar SQL fyrirspurnirnar fyrir verkefnið.
-- **gagnagrunnur/**: Inniheldur SQL skrár fyrir gögnin sem þarf að hlaða inn í töflurnar fyrir verkefnið.
 
 ## PostgreSQL tenging
 Gagnagrunnurinn er hýstur á **Railway** og er aðgengilegur með eftirfarandi tengingarupplýsingum:
