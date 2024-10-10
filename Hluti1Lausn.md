@@ -1,27 +1,31 @@
-### Útskýring á SQL kóðanum og niðurstöðum töflunnar
+### Útskýring á SQL kóðanum og niðurstöðum töflunnar fyrir Lið 1
 
 #### Kóðinn:
 1. **WITH cte_kingdoms_houses AS ...**:
-   - Fyrirspurnin byrjar að skilgreina **CTE (Common Table Expression)** sem sameinar gögn úr tveimur töflum: 
-     - **atlas.kingdoms** (sem inniheldur upplýsingar um ríki).
-     - **got.houses** (sem inniheldur upplýsingar um ættir og hús).
-   - Með **LEFT JOIN** eru öll ríki í **atlas.kingdoms** tekin með, jafnvel þótt þau hafi ekki tengt hús (house) í **got.houses**.
-   - Tengingin er gerð þar sem nafn ríkis í **atlas.kingdoms** samsvarar svæði í **got.houses**.
+   - Fyrirspurnin byrjar með **CTE** sem sameinar gögn úr tveimur töflum: 
+     - **atlas.kingdoms** (ríkisupplýsingar)
+     - **got.houses** (upplýsingar um hús/ættir).
+   - Hér er notað **FULL OUTER JOIN** til að tryggja að bæði ríkisupplýsingar og hús sem eiga sér ekki samsvörun séu með í niðurstöðunum.
+   - Tengingin er gerð með því að passa saman heiti ríkja í **atlas.kingdoms** við svæði í **got.houses**.
 
-2. **INSERT INTO lannister.tables_mapping (kingdom_id, house_id)**:
-   - Hér er gögnunum úr **CTE** bætt inn í töfluna **lannister.tables_mapping**. Fyrirspurnin setur inn bæði **kingdom_id** (auðkenni ríkis) og **house_id** (auðkenni ættar/húss).
-   - **WHERE NOT EXISTS** tryggir að engin afrit séu sett inn; ef sambandið milli **kingdom_id** og **house_id** er nú þegar til í töflunni, þá er það ekki sett inn aftur.
+2. **INSERT INTO lannister.tables_mapping ... ON CONFLICT**:
+   - Gögnunum er bætt inn í töfluna **lannister.tables_mapping** þar sem bæði **kingdom_id** (auðkenni ríkis) og **house_id** (auðkenni húss) eru skráð.
+   - **ON CONFLICT** tryggir að ef **house_id** er til staðar fyrir sama hús, þá er **kingdom_id** uppfært í stað þess að búa til nýja línu.
+   - **EXCLUDED.kingdom_id** er nýja gildið sem kemur í staðinn ef það er árekstur.
 
 #### Taflan (lannister.tables_mapping):
-Taflan **lannister.tables_mapping** tengir ríki við hús/ættir. Hún hefur eftirfarandi dálka:
+Taflan **lannister.tables_mapping** inniheldur sambönd á milli húsa og ríkja. Hér eru dæmi úr niðurstöðutöflunni:
 
-1. **house_id**: Þessi dálkur inniheldur auðkenni fyrir hús/ættir úr **got.houses**. Dæmi um hús eru Stark, Lannister o.fl.
-2. **kingdom_id**: Þessi dálkur inniheldur auðkenni fyrir ríki úr **atlas.kingdoms**. Það tengir hús við ríki, svo sem The North eða The Reach.
-3. **location_id**: Þessi dálkur er notaður til að tengja staðsetningar við húsin, en í þessum hluta töflunnar er hann tómur (`<null>`)
+1. **house_id**: Þessi dálkur inniheldur auðkenni fyrir hús eða ættir úr **got.houses**. Í þessum hluta töflunnar eru nokkrar línur þar sem **house_id** er `null`, sem þýðir að engin samsvarandi hús eru tengd þessum ríkjum.
+2. **kingdom_id**: Dálkurinn fyrir auðkenni ríkis úr **atlas.kingdoms**. Dæmi úr töflunni sýna ríki eins og **kingdom_id** `10`, `3`, og `7`, sem eru tengd húsum eða eru án tengds húss.
+3. **location_id**: Þessi dálkur er tómur (`null`) í þessum hluta töflunnar.
 
 #### Niðurstaða:
-- Fyrirspurnin tengir hús/ættir við ríki og setur gögnin inn í **lannister.tables_mapping** töfluna. Taflan inniheldur upplýsingar um hvaða hús tilheyra hvaða ríki, jafnvel þó engin staðsetning sé tengd við húsið.
-- Dæmi úr töflunni sýna t.d. að húsið með **house_id** `403` tilheyrir ríkinu með **kingdom_id** `6`, og húsið með **house_id** `430` tilheyrir ríkinu með **kingdom_id** `1`.
+- Fyrirspurnin sameinar upplýsingar um öll hús og ríki, jafnvel þau sem eiga sér ekki tengingu við hvert annað. Það tryggir að engin gögn séu skilin út undan.
+- **ON CONFLICT** setningin tryggir að gögn verði uppfærð í stað þess að búa til afrit þegar **house_id** er nú þegar til í töflunni.
+
+Dæmi úr töflunni sýnir t.d. að **kingdom_id** `10` er ekki tengt við neitt hús, og að **house_id** `17` er tengt við ríki með **kingdom_id** `7`.
+
 
 
 

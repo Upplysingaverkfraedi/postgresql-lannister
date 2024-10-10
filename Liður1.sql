@@ -1,12 +1,10 @@
 WITH cte_kingdoms_houses AS (
     SELECT
         k.gid AS kingdom_id,    -- Gildi ríkis úr atlas.kingdoms
-        k.name AS kingdom_name, -- Nafn ríkis úr atlas.kingdoms
-        h.id AS house_id,       -- Gildi hús úr got.houses
-        h.name AS house_name    -- Nafn hússins úr got.houses
+        h.id AS house_id       -- Gildi hús úr got.houses
     FROM
         atlas.kingdoms k
-    LEFT JOIN
+    FULL OUTER JOIN
         got.houses h
     ON
         k.name = h.region       -- Tengjum ríkisheitið við svæðið í got.houses
@@ -17,9 +15,8 @@ SELECT
     house_id
 FROM
     cte_kingdoms_houses
-WHERE NOT EXISTS (
-    SELECT 1
-    FROM lannister.tables_mapping tm
-    WHERE tm.kingdom_id = cte_kingdoms_houses.kingdom_id
-      AND tm.house_id = cte_kingdoms_houses.house_id
-);
+ON CONFLICT (house_id) DO UPDATE
+    SET
+        kingdom_id=EXCLUDED.kingdom_id
+;
+h.id
