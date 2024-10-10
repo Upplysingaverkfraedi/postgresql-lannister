@@ -4,6 +4,7 @@
 ## Möppustrúktúr
 Verkefnið fylgir eftirfarandi möppustrúktúr:
 
+```
 ├── sql/ # Mappa með SQL skráum verkefnisins 
 │ ├── Liður1.sql # Fyrirspurn fyrir Lið 1 
 │ ├── Liður2.sql # Fyrirspurn fyrir Lið 2 
@@ -13,7 +14,7 @@ Verkefnið fylgir eftirfarandi möppustrúktúr:
 ├── houses_data.sql # Gögn fyrir got.houses töflu
 ├── kingdoms_data.sql # Gögn fyrir atlas.kingdoms töflu 
 └── locations_data.sql # Gögn fyrir atlas.locations töflu
-
+```
 
 ### Möppulýsing:
 - **sql/**: Inniheldur allar SQL fyrirspurnirnar fyrir verkefnið.
