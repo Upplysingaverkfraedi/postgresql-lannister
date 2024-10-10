@@ -61,6 +61,7 @@ Liður 3 finnur hús í Norðrinu sem hafa fleiri en 5 hliðholla meðlimi. Til 
 
 ## Hvernig á að keyra hluta 2
 
+<<<<<<< Updated upstream
 ### Tengjast gagnasafni
 Fyrst þarf að tengjast gagnasafninu Railway með því að fylgja leiðbeiningum úr uppsetningarhlutanum. Þegar þú ert tengdur, geturðu keyrt verkefnið í DataGrip.
 
@@ -75,10 +76,25 @@ Til að skoða gögnin í sýndartöflunni, keyrðu eftirfarandi fyrirspurn:
 ```
 sql
 SELECT * FROM lannister.v_pov_characters_human_readable;
+=======
+### Tengjast gagnasafni:
+Fyrst þarf að tengjast gagnasafninu Railway og hlaða því niður (sjá upplýsingar fyrir ofan)
+
+### Búa til View:
+Það þarf að búa til view, inn í Datagrip þá er grænn hnappur sem er notaður til að keyra kóðann og þar er hægt að ýta á `CREATE OR REPLACE VIEW lannister….`
+
+### Keyra kóðann: 
+Næst er hægt að keyra kóðann inn í Datagrip og þá kemur upp sýndartaflan. 
+
+Einnig er hægt að nota eftirfarandi skipun: 
+```
+SELECT * FROM lausn.v_pov_characters_human_readable;
+>>>>>>> Stashed changes
 ```
 
 ## Hvernig á að keyra hluta 3
 
+<<<<<<< Updated upstream
 ### Flatarmál konungsríkja
 1. Opnaðu **DataGrip** og tengdu þig við gagnagrunninn **railway**.
 2. Opnaðu skjalið `hluti3.sql` og límdu kóðann inn í SQL Editor.
@@ -105,6 +121,14 @@ SELECT * FROM lannister.v_pov_characters_human_readable;
    ```
 ### Finna flatarmál þriðja stærsta konungsríkisins
 Til að finna heildar flatarmál þriðja stærsta konungsríkisins, keyrðu eftirfarandi fyrirspurn:
+=======
+Það er mjög einfalt að keyra lausnir fyrir þetta verkefni. Eina sem þarf að gera er að keyra eftirfarandi SQL skipanir.
+
+
+### Flatarmáls konungsríkja
+**Búa til fall sem reiknar út flatarmál konungsríkis út frá landfræðilegum gögnum. Gefið niðurstöðu í ferkílómetrum (þ.e. km²) með engum aukastöfum.**
+
+>>>>>>> Stashed changes
 
 ```
 sql
