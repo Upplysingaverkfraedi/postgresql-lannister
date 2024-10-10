@@ -19,4 +19,3 @@ ON CONFLICT (house_id) DO UPDATE
     SET
         kingdom_id=EXCLUDED.kingdom_id
 ;
-h.id
