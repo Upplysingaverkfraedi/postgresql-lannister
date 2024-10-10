@@ -1,7 +1,7 @@
 ## Inngangur
 Þetta verkefni felur í sér að vinna með PostgreSQL gagnagrunn til að útfæra SQL fyrirspurnir tengdar "Game of Thrones" heiminum. Verkefnið er skipt í þrjá liði þar sem við framkvæmum ýmsar fyrirspurnir og setjum gögn í töflur.
 
-## Mappustrúktúr
+## Möppustrúktúr
 Verkefnið fylgir eftirfarandi möppustrúktúr:
 
 ├── sql/ # Mappa með SQL skráum verkefnisins 
@@ -35,10 +35,11 @@ Notið IDE til að tengjast PostgreSQL gagnagrunninum með þessum tengingaruppl
 
 Til að sjá hvaða töflur standa ykkur til boða getið þið keyrt eftirfarandi SQL fyrirspurn:
 
-SELECT *
-FROM pg_tables
-WHERE schemaname IN ('atlas', 'got')
-ORDER BY schemaname, tablename;
+   ```sql
+   SELECT *
+   FROM pg_tables
+   WHERE schemaname IN ('atlas', 'got')
+   ORDER BY schemaname, tablename;
 
 ### Skref 1: Setja upp PostgreSQL tengingu í DataGrip
 1. Opnaðu **DataGrip**.
