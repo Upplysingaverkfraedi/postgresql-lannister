@@ -1,5 +1,8 @@
 # Hluti 3: PostGIS og föll í PostgreSQL
 
+## Verkefnalýsing
+Í þessum hluta átti að nota PostGIS sem er viðbót fyrir PostgreSQL sem bætir við geospatial gagnagrunnsföllum og aðgerðum. PostgreSQL með PostGIS gerir okkur leyft að geym það sérhæfðar gagnagrunnstöflur og föll til að vinna með geospatial gögn. Annars vegar átti að finna flatarmál konungsríkja og hins vegar finna sjaldgæfustu staðsetningartegund utan The Seven Kingdoms og heiti þeirra staða sem tilheyrðu þeirri tegund. 
+
 ## Möppustrúktur 
 
 ```
