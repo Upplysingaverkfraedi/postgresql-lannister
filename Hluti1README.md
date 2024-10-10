@@ -40,6 +40,7 @@ Til að sjá hvaða töflur standa ykkur til boða getið þið keyrt eftirfaran
    FROM pg_tables
    WHERE schemaname IN ('atlas', 'got')
    ORDER BY schemaname, tablename;
+   ```
 
 ### Skref 1: Setja upp PostgreSQL tengingu í DataGrip
 1. Opnaðu **DataGrip**.
