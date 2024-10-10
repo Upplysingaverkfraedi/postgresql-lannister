@@ -7,7 +7,7 @@ WITH north_houses AS (
     FROM
         got.houses h
     WHERE
-        h.region = 'The North'  -- Við einbeitum okkur að The North húsum
+        h.region = 'The North'  -- Einbeitum að norðurhúsum
 )
 -- Skilyrði til að fá ættir með fleiri en 5 hliðholla meðlimi
 SELECT
