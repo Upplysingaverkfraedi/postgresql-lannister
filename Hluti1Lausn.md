@@ -26,6 +26,34 @@ Taflan **lannister.tables_mapping** inniheldur sambönd á milli húsa og ríkja
 
 Dæmi úr töflunni sýnir t.d. að **kingdom_id** `10` er ekki tengt við neitt hús, og að **house_id** `17` er tengt við ríki með **kingdom_id** `7`.
 
+### Útskýring á SQL kóðanum og niðurstöðum töflunnar fyrir Lið 2
+
+#### Kóðinn:
+1. **WITH cte_location_house_mapping AS ...**:
+   - Fyrirspurnin byrjar með **CTE** sem sameinar gögn úr tveimur töflum:
+     - **atlas.locations** (upplýsingar um staði).
+     - **got.houses** (upplýsingar um hús/ættir).
+   - Tengingin er gerð þar sem staðir í **atlas.locations** samsvara sæti húsa í **got.houses** með því að nota **ANY(h.seats)**. Þetta þýðir að ef staðsetning er eitt af sætum hússins, þá tengist það því húsi.
+   - Við erum að skoða eingöngu hús sem tilheyra Norðrinu með skilyrðinu **h.region = 'The North'**.
+
+2. **INSERT INTO lannister.tables_mapping ...**:
+   - Gögnunum sem eru sótt í **CTE** er bætt inn í **lannister.tables_mapping** töfluna, þar sem **house_id** og **location_id** eru skráð saman.
+   - **WHERE NOT EXISTS** tryggir að gögnin séu ekki sett inn ef þau eru nú þegar til (til að koma í veg fyrir afrit).
+
+3. **Birta niðurstöður**:
+   - Seinni hluti fyrirspurnarinnar birtir niðurstöðurnar með því að endurnýta **CTE** til að fá staði og hús í Norðrinu sem eru tengd með sætum.
+
+#### Taflan (Niðurstöður fyrir norðurhúsin og staðsetningar þeirra):
+Taflan sýnir tengsl milli húsa í Norðrinu og staðsetninga þeirra:
+
+1. **location_id**: Auðkenni staðsetningar úr **atlas.locations**. Dæmi úr töflunni sýna staði eins og `135` (Karhold) og `186` (Torrhen's Square).
+2. **location_name**: Nafn staðsetningarinnar (t.d. **Karhold**, **Torrhen's Square**).
+3. **house_id**: Auðkenni húss úr **got.houses**. Þetta tengir ættir við staðsetningar. Dæmi úr töflunni eru **house_id** `215` fyrir **House Karstark of Karhold**.
+4. **house_name**: Nafn ættarinnar eða hússins. Dæmi úr töflunni sýna **House Karstark of Karhold** og **House Tallhart of Torrhen's Square**.
+
+#### Niðurstaða:
+- Taflan sýnir hús í Norðrinu og staðsetningar þeirra, eins og **House Karstark of Karhold** tengt staðnum **Karhold**.
+- Fyrirspurnin bætir gögnunum inn í **lannister.tables_mapping** töfluna ef þau eru ekki þegar til staðar, og birtir svo niðurstöðurnar með öllum tengingum milli húsa og staða.
 
 
 
