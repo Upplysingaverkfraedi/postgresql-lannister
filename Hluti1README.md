@@ -10,10 +10,6 @@ Verkefnið fylgir eftirfarandi möppustrúktúr:
 │ ├── Liður2.sql # Fyrirspurn fyrir Lið 2 
 │ └── Liður3.sql # Fyrirspurn fyrir Lið 3 
 ├── README.md # Leiðbeiningar um hvernig á að keyra verkefnið 
-└── gagnagrunnur/ # Gögnin sem þarf að hlaða inn fyrir verkefnið 
-├── houses_data.sql # Gögn fyrir got.houses töflu
-├── kingdoms_data.sql # Gögn fyrir atlas.kingdoms töflu 
-└── locations_data.sql # Gögn fyrir atlas.locations töflu
 ```
 
 ### Möppulýsing:
