@@ -61,7 +61,6 @@ Liður 3 finnur hús í Norðrinu sem hafa fleiri en 5 hliðholla meðlimi. Til 
 
 ## Hvernig á að keyra hluta 2
 
-<<<<<<< Updated upstream
 ### Tengjast gagnasafni
 Fyrst þarf að tengjast gagnasafninu Railway með því að fylgja leiðbeiningum úr uppsetningarhlutanum. Þegar þú ert tengdur, geturðu keyrt verkefnið í DataGrip.
 
@@ -76,74 +75,89 @@ Til að skoða gögnin í sýndartöflunni, keyrðu eftirfarandi fyrirspurn:
 ```
 sql
 SELECT * FROM lannister.v_pov_characters_human_readable;
-=======
-### Tengjast gagnasafni:
-Fyrst þarf að tengjast gagnasafninu Railway og hlaða því niður (sjá upplýsingar fyrir ofan)
-
-### Búa til View:
-Það þarf að búa til view, inn í Datagrip þá er grænn hnappur sem er notaður til að keyra kóðann og þar er hægt að ýta á `CREATE OR REPLACE VIEW lannister….`
-
-### Keyra kóðann: 
-Næst er hægt að keyra kóðann inn í Datagrip og þá kemur upp sýndartaflan. 
-
-Einnig er hægt að nota eftirfarandi skipun: 
-```
-SELECT * FROM lausn.v_pov_characters_human_readable;
->>>>>>> Stashed changes
 ```
 
 ## Hvernig á að keyra hluta 3
 
-<<<<<<< Updated upstream
-### Flatarmál konungsríkja
-1. Opnaðu **DataGrip** og tengdu þig við gagnagrunninn **railway**.
-2. Opnaðu skjalið `hluti3.sql` og límdu kóðann inn í SQL Editor.
-3. Keyrðu eftirfarandi fall til að reikna út flatarmál konungsríkja:
-   
-   ```
-   sql
-   CREATE OR REPLACE FUNCTION lannister.get_kingdom_size(kingdom_id integer)
-   RETURNS integer AS $$
-   DECLARE
-       area_km2 integer;
-   BEGIN
-       IF NOT EXISTS (SELECT 1 FROM atlas.kingdoms k WHERE k.gid = kingdom_id) THEN
-           RAISE EXCEPTION 'Kingdom with id % not found', kingdom_id;
-       END IF;
-   
-       SELECT ST_Area(geog)/1e6 INTO area_km2
-       FROM atlas.kingdoms
-       WHERE gid = kingdom_id;
-   
-       RETURN area_km2;
-   END;
-   $$ LANGUAGE plpgsql;
-   ```
-### Finna flatarmál þriðja stærsta konungsríkisins
-Til að finna heildar flatarmál þriðja stærsta konungsríkisins, keyrðu eftirfarandi fyrirspurn:
-=======
 Það er mjög einfalt að keyra lausnir fyrir þetta verkefni. Eina sem þarf að gera er að keyra eftirfarandi SQL skipanir.
 
 
 ### Flatarmáls konungsríkja
 **Búa til fall sem reiknar út flatarmál konungsríkis út frá landfræðilegum gögnum. Gefið niðurstöðu í ferkílómetrum (þ.e. km²) með engum aukastöfum.**
 
->>>>>>> Stashed changes
 
 ```
-sql
-SELECT name
-FROM atlas.kingdoms
-ORDER BY lannister.get_kingdom_size(gid) DESC
+CREATE OR REPLACE FUNCTION lannister.get_kingdom_size(kingdom_id integer)
+RETURNS integer AS $$
+DECLARE
+    area_km2 integer;
+
+    --Kastar villu ef það er ólöglegt gildi
+BEGIN
+    IF NOT EXISTS (SELECT 1 FROM atlas.kingdoms k WHERE k.gid = kingdom_id) THEN
+        RAISE EXCEPTION 'Kingdom with id % not found', kingdom_id;
+    END IF;
+
+    SELECT ST_Area(geog)/1e6 INTO area_km2
+    FROM atlas.kingdoms
+    WHERE gid = kingdom_id;
+
+    RETURN area_km2;
+END;
+$$ LANGUAGE plpgsql;
+```
+
+**Úttakið ætti að vera:**
+ ```
+2621185
+684321
+567428
+122121
+749168
+901071
+1208509
+558293
+28180
+241016
+```
+
+**Skrifaðu eina SQL fyrirspurn sem notar fallið til að finna heildar flatarmál þriðja stærsta konungsríkisins.**
+
+```
+SELECT * FROM pg_tables WHERE schemaname IN ('atlas', 'got')
+ORDER BY schemaname, tablename;
+
+select name from atlas.kingdoms order by lannister.get_kingdom_size(gid) desc
 OFFSET 2
 LIMIT 1;
+
+CREATE OR REPLACE FUNCTION lannister.get_kingdom_size(kingdom_id integer)
+RETURNS integer AS $$
+DECLARE
+    area_km2 integer;
+BEGIN
+    SELECT ST_Area(geog)/1e6
+    INTO area_km2
+    FROM atlas.kingdoms
+    WHERE gid = kingdom_id;
+
+    RETURN area_km2;
+END;
+$$ LANGUAGE plpgsql;
+```
+
+
+**Úttakið ætti að vera:**
+
+```
+Dorne
 ```
 
 ### Fjöldi staðsetninga og staðsetningar af ákveðnum tegundum
-Til að finna sjaldgæfustu staðsetningategund utan The Seven Kingdoms og hvaða staðir tilheyra þeirri tegund, keyrðu eftirfarandi fyrirspurn:
+
+**Skrifaðu eina SQL fyrirspurn sem finnur sjaldgæfustu staðsetningategund (location_type) utan The Seven Kingdoms (hér ættu einnig að koma staðir eins og í Essos, þ.e.a.s. utan Westeros), og hvaða heita staðirnir sem tilheyra þeirri tegund?**
 
 ```
-sql
 SELECT
     l.name,
     l.type
@@ -158,5 +172,26 @@ WHERE l.type = (
     ORDER BY COUNT(*) ASC
     LIMIT 1
 );
-```
 
+```
+**Úttakið ætti að vera:**
+
+```
+Stone Mill,Landmark
+Pendric Hills,Landmark
+Nagga's Bones,Landmark
+Fist of the First Men,Landmark
+Hollow Hill,Landmark
+Old Stone Bridge Inn,Landmark
+Water Gardens,Landmark
+Nunn's Deep,Landmark
+Tumblers Falls,Landmark
+Rushing Falls,Landmark
+Mummer's Ford,Landmark
+Inn of the Kneeling Man,Landmark
+Dagger Lake,Landmark
+God's Eye,Landmark
+Long Lake,Landmark
+Crossroads Inn,Landmark
+
+```
